@@ -66,19 +66,20 @@ void sellProduct(dispenserType& pDispenser, cashRegister& pCash) {
 		cout << "\nYou need to give " << pDispenser.getCost() << " money\n" << endl;
 		cin >> ByMoney;
 
+		if (ByMoney < pDispenser.getCost()) {
+			cout << "\nIt is necessary to deposit additional funds in the amount of: " << pDispenser.getCost() - ByMoney << "\n" << endl;
+			cin >> ByMoney2;
+			ByMoney = ByMoney + ByMoney2;
+		}
+
 		if (ByMoney >= pDispenser.getCost()) {
 			pCash.acceptAmount(ByMoney);
 			pDispenser.makeSale();
 			cout << "\nThe purchase was successful!\n" << endl;
 
 		}
-		else if (ByMoney < pDispenser.getCost()) {
-			cout << "\nIt is necessary to deposit additional funds in the amount of: " << pDispenser.getCost() - ByMoney << "\n" << endl;
-			cin >> ByMoney2;
-			ByMoney = ByMoney + ByMoney2;
-		}
 		else {
-			cout << "Insufficient funds" << endl;
+			cout << "\nInsufficient funds" << endl;
 		}
 
 	}
