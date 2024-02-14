@@ -104,6 +104,8 @@ int main(){
 		cout << "3. Gum. The cost is " << gum.getCost() << " and the rest in the store: " << gum.getNoOfItems() << endl;
 		cout << "4. Cookies. The cost is " << cookies.getCost() << " and the rest in the store: " << cookies.getNoOfItems() << endl;
 		cout << "5. No one. Bye!\n" << endl;
+		//password is "123456"
+		cout << "If you are the owner of the store, enter the password to find out the cash at the checkout: " << endl;
 
 		cin >> Item;
 
@@ -122,6 +124,10 @@ int main(){
 			break;
 		case 5:
 			cout << "\nBye-Bye!" << endl;
+			break;
+		case 123456:
+			cout << "\nThe amount in the cash register is: " << counter.getCurrentBalance() << endl;
+			Item = 1;
 			break;
 		default:
 			cout << "\nSelect the item again.\n" << endl;
