@@ -44,19 +44,6 @@ public:
 	}
 
 };
-void showSelection();
-void sellProduct(cashRegister& pCash, dispenserType pDispenser);
-
-void showSelection() {
-
-	cout << "\nHello! Which item you want to choose?" << endl;
-	cout << "1. Candy" << endl;
-	cout << "2. Chips" << endl;
-	cout << "3. Gum" << endl; 
-	cout << "4. Cookies" << endl;
-	cout << "5. No one. Bye!\n" << endl;
-
-}
 
 void sellProduct(dispenserType& pDispenser, cashRegister& pCash) {
 
@@ -72,14 +59,22 @@ void sellProduct(dispenserType& pDispenser, cashRegister& pCash) {
 			ByMoney = ByMoney + ByMoney2;
 		}
 
-		if (ByMoney >= pDispenser.getCost()) {
+		if (ByMoney > pDispenser.getCost()) {
+			pCash.acceptAmount(pDispenser.getCost());
+			pDispenser.makeSale();
+			cout << "\nYou have some change left: " <<ByMoney - pDispenser.getCost() << "\n" << endl;
+
+		}
+
+		if (ByMoney == pDispenser.getCost()) {
 			pCash.acceptAmount(ByMoney);
 			pDispenser.makeSale();
 			cout << "\nThe purchase was successful!\n" << endl;
 
 		}
-		else {
-			cout << "\nInsufficient funds" << endl;
+
+		if (ByMoney < pDispenser.getCost()) {
+			cout << "\nYou didn't have enough money to buy again. Choose something else." << "\n" << endl;
 		}
 
 	}
@@ -90,17 +85,28 @@ void sellProduct(dispenserType& pDispenser, cashRegister& pCash) {
 }
 
 int main(){
-	int Item;
-	showSelection();
-	cin >> Item;
-
 	cashRegister counter;
+	int Item;
+	Item = 1;
+
 	dispenserType candy(150, 25);
 	dispenserType chips(200, 70);
 	dispenserType gum(70, 15);
 	dispenserType cookies(90, 150);
 
-	while (Item != 5) {
+	cout << "Hi! Welcome to the candy store. We have candy, chips, gum and coookies" << endl;
+
+	while ((Item >= 1) and (Item < 5)) {
+
+		cout << "\nHere are our prices and the rest in the store:" << endl;
+		cout << "1. Candy. The cost is " << candy.getCost() << " and the rest in the store: " << candy.getNoOfItems() << endl;
+		cout << "2. Chips. The cost is " << chips.getCost() << " and the rest in the store: " << chips.getNoOfItems() << endl;
+		cout << "3. Gum. The cost is " << gum.getCost() << " and the rest in the store: " << gum.getNoOfItems() << endl;
+		cout << "4. Cookies. The cost is " << cookies.getCost() << " and the rest in the store: " << cookies.getNoOfItems() << endl;
+		cout << "5. No one. Bye!\n" << endl;
+
+		cin >> Item;
+
 		switch (Item) {
 		case 1:
 			sellProduct(candy, counter);
@@ -114,11 +120,15 @@ int main(){
 		case 4:
 			sellProduct(cookies, counter);
 			break;
+		case 5:
+			cout << "\nBye-Bye!" << endl;
+			break;
 		default:
-			cout << "NONE" << endl;
+			cout << "\nSelect the item again.\n" << endl;
+
+			cin >> Item;
 		}
-		showSelection();
-		cin >> Item;
+
 	}
 
 	return 0;
